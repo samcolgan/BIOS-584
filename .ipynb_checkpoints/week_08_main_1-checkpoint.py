@@ -10,8 +10,3 @@ print(ef.alpha)
 print(ef.message_hello('Tianwen'))
 print(ef.fn_cubic(3))
 print(np.array([1.0]))
-
-
-random()
-
-np.random.random()
