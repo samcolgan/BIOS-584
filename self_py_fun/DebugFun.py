@@ -26,7 +26,7 @@ def produce_trun_mean_cov(input_signal, input_type, E_val):
 
     input_signal = np.reshape(input_signal, [sample_size_len, E_val, int(feature_len/E_val)])
     input_signal_tar = input_signal[input_type == 1, ...]
-    input_signal_ntar = input_signal[input_type == 0, ...]
+    input_signal_ntar = input_signal[input_type == -1, ...]
 
     signal_tar_mean = np.mean(input_signal_tar, axis=0)
     signal_ntar_mean = np.mean(input_signal_ntar, axis=0)
