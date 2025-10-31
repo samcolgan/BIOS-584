@@ -4,3 +4,5 @@ from self_py_fun.Quiz3Fun import *
 sample_arr_1 = np.array([1,2,3,4,5])
 d_1 = compute_D_partial(sample_arr_1)
 # The correct d_1 should be 5.66.
+
+d_1_alt = compute_D_correct(sample_arr_1)

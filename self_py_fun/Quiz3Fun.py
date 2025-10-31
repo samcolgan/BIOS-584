@@ -16,5 +16,9 @@ def compute_D_correct(input_signal):
     r"""
     :param input_signal:
     """
-    D_val = None
+    T_len = len(input_signal)
+    signal_diff_one = np.empty(T_len-1)
+    for iter in np.arange(0, T_len-1):
+        signal_diff_one[iter] = np.sqrt(1 + (input_signal[iter] - input_signal[iter+1])**2)
+    D_val = np.sum(signal_diff_one)
     return D_val
