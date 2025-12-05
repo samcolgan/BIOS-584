@@ -26,7 +26,7 @@ bp_low = 0.5
 bp_upp = 6
 electrode_num = 16
 # Change the following directory to your own one.
-parent_dir = '{}'.format(os.getcwd())
+parent_dir = '/Users/tma33/Library/CloudStorage/OneDrive-EmoryUniversity/Emory/Rollins SPH/2025/BIOS-584/python_proj'
 parent_data_dir = '{}/data'.format(parent_dir)
 time_index = np.linspace(0, 800, 25)
 electrode_name_ls = ['F3', 'Fz', 'F4', 'T7', 'C3', 'Cz', 'C4', 'T8', 'CP3', 'CP4', 'P3', 'Pz', 'P4', 'PO7', 'PO8', 'Oz']
@@ -58,18 +58,9 @@ eeg_trn_type = np.squeeze(eeg_trn_type, axis=1)
 # you should be able to obtain relevant data files named
 # eeg_frt_signal and eeg_frt_type
 # Write your own code below:
-# Load the FRT dataset
-frt_data_name = '{}_001_BCI_FRT_Truncated_Data_{}_{}'.format(subject_name, bp_low, bp_upp)
-frt_data_dir = '{}/{}.mat'.format(parent_data_dir,frt_data_name)
-eeg_frt_obj = sio.loadmat(frt_data_dir)
 
-# Extract signal and type information
-print(eeg_frt_obj.keys())
-eeg_frt_signal = eeg_frt_obj['Signal']
-print(eeg_frt_signal.shape) # 1296, 400
-eeg_frt_type = eeg_frt_obj['Type']
-print(eeg_frt_type.shape) # 1296, 1
-eeg_frt_type = np.squeeze(eeg_frt_type, axis=1)
+
+
 
 # You have completed the exploratory data analysis in HW7 and HW8.
 # The dataset has been carefully reviewed by Dr. Jane E. Huggins,
@@ -83,15 +74,10 @@ eeg_frt_type = np.squeeze(eeg_frt_type, axis=1)
 # You do not need to modify the parameters of each classifier
 # except for LogisticRegression: set max_iter=1000
 # Write your own code below:
-# Initialize models
-logistic_obj = LR(max_iter=1000)
-lda_obj = LDA()
-svm_obj = SVC(probability=True)
 
-# Train the models using TRN data signal and type
-logistic_obj.fit(eeg_trn_signal, eeg_trn_type)
-lda_obj.fit(eeg_trn_signal, eeg_trn_type)
-svm_obj.fit(eeg_trn_signal, eeg_trn_type)
+
+
+
 
 # Step 3: Evaluate model performance on both TRN and FRT files
 # Step 3.1: Prediction accuracy on TRN files
@@ -100,22 +86,24 @@ svm_obj.fit(eeg_trn_signal, eeg_trn_type)
 # You are asked to generate stimulus-level probability for each method on TRN files,
 # denoted as logistic_y_trn, lda_y_trn, and svm_y_trn.
 # Write your own code below:
-# Making predictions with each model
-logistic_y_trn = logistic_obj.predict_proba(eeg_trn_signal)
-lda_y_trn = lda_obj.predict_proba(eeg_trn_signal)
-svm_y_trn = svm_obj.predict_proba(eeg_trn_signal)
+
+
+
+
 
 # Step 3.2: Prediction accuracy on FRT files
 # Similarly, you are asked to generate stimulus-level probability for each method on FRT files,
 # denoted as logistic_y_frt, lda_y_frt, and svm_y_frt.
 # Write your own code below:
-logistic_y_frt = logistic_obj.predict_proba(eeg_frt_signal)
-lda_y_frt = lda_obj.predict_proba(eeg_frt_signal)
-svm_y_frt = svm_obj.predict_proba(eeg_frt_signal)
+
+
+
+
 
 # Step 4: Convert binary classification probability to character-level accuracy
 # This involves advanced data manipulation, so you do not need to write any new code.
 # Please run the following code to view the final results.
+'''
 eeg_trn_code = eeg_trn_obj['Code']
 eeg_frt_code = eeg_frt_obj['Code']
 char_frt = convert_raw_char_to_alphanumeric_stype(eeg_frt_obj['Text'])
@@ -188,7 +176,7 @@ print(svm_trn_accuracy)
 print(logistic_frt_accuracy)
 print(lda_frt_accuracy)
 print(svm_frt_accuracy)
-
+'''
 
 # Remember to answer two questions below:
 
@@ -202,19 +190,5 @@ print(svm_frt_accuracy)
 # svm_trn_accuracy = np.mean(svm_letter_mat_trn == np.array(list(char_trn))[:, np.newaxis], axis=0)
 # svm_frt_accuracy = np.mean(svm_letter_mat_frt == np.array(list(char_frt))[:, np.newaxis], axis=0)
 
-# These rows are generating the overall agreement between the predicted sequences of
-# letters from each model and the actual sequence of letters. Each of the three methods
-# (logistic, lda, svm) is run twice--once on the training dataset and once on the
-# testing dataset. For example, svm_frt_accuracy is an array with four float values
-# where each number represents the proportion of letters from the testing set
-# that the SVM method correctly predicted for that sequence.
-
-
 # Step 5: Summary
 # Which method performs the best? Why?
-# SVM performs the best. This is the only method to reach 100% agreement by the
-# fourth sequence on the testing data ([0.62962963 0.88888889 0.92592593 1.]). By
-# comparison, LDA produced accuracy rates of [0.7037037  0.85185185 0.92592593 0.96296296]
-# while logistic produced accuracy rates of [0.59259259 0.88888889 0.92592593 0.96296296].
-# Evidently, the SVM method is more robust to overfitting than the other two methods.
-# The SVM method performs better on the testing data than the other two. 
